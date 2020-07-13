@@ -2,8 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:todoeyflutter/widgets/task_list.dart';
 import 'package:todoeyflutter/screens/add_task_screen.dart';
+import 'package:todoeyflutter/models/task.dart';
 
-class TaskScreen extends StatelessWidget {
+class TaskScreen extends StatefulWidget {
+  @override
+  _TaskScreenState createState() => _TaskScreenState();
+}
+
+class _TaskScreenState extends State<TaskScreen> {
+  // Lifting State up Todo 1: Move tasks to task_screen
+  List<Task> tasks = [
+    Task(name: 'Buy milk'),
+    Task(name: 'Buy eggs'),
+    Task(name: 'Buy bread'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +31,15 @@ class TaskScreen extends StatelessWidget {
             builder: (BuildContext context) => SingleChildScrollView(
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: AddTaskScreen(),
+              // Lifting State up Todo 5: pass call back here to get the value from the downside
+              child: AddTaskScreen((newTaskTitle) {
+                // Lifting State up Todo 9: Wrap in the setState to add new task to the tasks list
+                setState(() {
+                  tasks.add(Task(name: newTaskTitle));
+                });
+                // Lifting State up Todo 10: Pop off the screen when add a task
+                Navigator.pop(context);
+              }),
             ),
           );
         },
@@ -56,7 +77,7 @@ class TaskScreen extends StatelessWidget {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${tasks.length} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -78,7 +99,10 @@ class TaskScreen extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TaskList(),
+              // Lifting State up Todo 4: pass tasks down
+              child: TaskList(
+                tasks: tasks,
+              ),
             ),
           )
         ],

@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 class AddTaskScreen extends StatelessWidget {
+  // Lifting State up Todo 6: Add callback value and constructor here
+  final Function addTaskCallback;
+  AddTaskScreen(this.addTaskCallback);
   @override
   Widget build(BuildContext context) {
+    // Lifting State up Todo 7: Define newTaskTitle
+    String newTaskTitle;
+
     return Container(
       color: Color(0xFF757575),
       child: Container(
@@ -33,8 +39,9 @@ class AddTaskScreen extends StatelessWidget {
             TextField(
               autofocus: true,
               textAlign: TextAlign.center,
-              onChanged: (value) {
-                print(value);
+              // Lifting State up Todo 7: Update newTaskTitle with onChange value
+              onChanged: (newTask) {
+                newTaskTitle = newTask;
               },
               decoration: InputDecoration(
                 contentPadding:
@@ -64,8 +71,10 @@ class AddTaskScreen extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                     )),
+                // Lifting State up Todo 8:  call the callback to pass the newTaskTitle
                 onPressed: () {
                   // Add Task
+                  addTaskCallback(newTaskTitle);
                 },
               ),
             ),

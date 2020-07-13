@@ -1,4 +1,3 @@
-// ListView builder Todo 1: Create task model
 class Task {
   final String name;
   bool isDone;
