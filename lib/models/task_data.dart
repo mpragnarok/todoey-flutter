@@ -13,15 +13,19 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
-// Add task with Provider TODO 4: Use UnmodifiableListView List to make sure you can't modify tasks from outside
   UnmodifiableListView<Task> get tasks {
     return UnmodifiableListView(_tasks);
   }
 
-// Add task with Provider TODO 1: Create addNewTask method
   void addNewTask(String newTask) {
     final task = Task(name: newTask);
     _tasks.add(task);
+    notifyListeners();
+  }
+
+// update task Todo 1: Create update task method to toggle the task
+  void updateTask(Task task) {
+    task.toggleDone();
     notifyListeners();
   }
 }
