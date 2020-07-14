@@ -2,21 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:todoeyflutter/widgets/task_list.dart';
 import 'package:todoeyflutter/screens/add_task_screen.dart';
-import 'package:todoeyflutter/models/task.dart';
+// implement Provider TODO 4: Import provider and task_data
+import 'package:provider/provider.dart';
+import 'package:todoeyflutter/models/task_data.dart';
 
-class TaskScreen extends StatefulWidget {
-  @override
-  _TaskScreenState createState() => _TaskScreenState();
-}
-
-class _TaskScreenState extends State<TaskScreen> {
-  // Lifting State up Todo 1: Move tasks to task_screen
-  List<Task> tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'Buy eggs'),
-    Task(name: 'Buy bread'),
-  ];
-
+class TaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,13 +21,10 @@ class _TaskScreenState extends State<TaskScreen> {
             builder: (BuildContext context) => SingleChildScrollView(
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
-              // Lifting State up Todo 5: pass call back here to get the value from the downside
               child: AddTaskScreen((newTaskTitle) {
-                // Lifting State up Todo 9: Wrap in the setState to add new task to the tasks list
-                setState(() {
-                  tasks.add(Task(name: newTaskTitle));
-                });
-                // Lifting State up Todo 10: Pop off the screen when add a task
+//                setState(() {
+//                  tasks.add(Task(name: newTaskTitle));
+//                });
                 Navigator.pop(context);
               }),
             ),
@@ -77,7 +64,8 @@ class _TaskScreenState extends State<TaskScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  // implement Provider TODO 8: Use taskCount method from TaskData
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -99,10 +87,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              // Lifting State up Todo 4: pass tasks down
-              child: TaskList(
-                tasks: tasks,
-              ),
+              child: TaskList(),
             ),
           )
         ],

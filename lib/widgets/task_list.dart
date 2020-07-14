@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todoeyflutter/widgets/task_tile.dart';
-import 'package:todoeyflutter/models/task.dart';
+import 'package:todoeyflutter/models/task_data.dart';
+import 'package:provider/provider.dart';
 
 class TaskList extends StatefulWidget {
-  // Lifting State up Todo 2:Add tasks final value and constructor here
-  final List<Task> tasks;
-  TaskList({this.tasks});
-
   @override
   _TaskListState createState() => _TaskListState();
 }
@@ -14,20 +11,25 @@ class TaskList extends StatefulWidget {
 class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        // Lifting State up Todo 3: Use tasks List with widget.tasks
-        return TaskTile(
-          taskTitle: widget.tasks[index].name,
-          isChecked: widget.tasks[index].isDone,
-          checkboxCallback: (checkboxState) {
-            setState(() {
-              widget.tasks[index].toggleDone();
-            });
+    // implement Provider TODO 6: Use Consumer for shorthand of Provider.of(context)
+    return Consumer<TaskData>(
+      builder: (context, taskData, child) {
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return TaskTile(
+              // implement Provider TODO 7: Call taskData instead of Provider.of(context)
+              taskTitle: taskData.tasks[index].name,
+              isChecked: taskData.tasks[index].isDone,
+              checkboxCallback: (checkboxState) {
+//            setState(() {
+//              taskData.tasks[index].toggleDone();
+//            });
+              },
+            );
           },
+          itemCount: taskData.tasks.length,
         );
       },
-      itemCount: widget.tasks.length,
     );
   }
 }
