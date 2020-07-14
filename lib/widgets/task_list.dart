@@ -15,14 +15,16 @@ class _TaskListState extends State<TaskList> {
       builder: (context, taskData, child) {
         return ListView.builder(
           itemBuilder: (context, index) {
-            // update task Todo 2: Create task value for clean code
             final task = taskData.tasks[index];
             return TaskTile(
               taskTitle: task.name,
               isChecked: task.isDone,
               checkboxCallback: (checkboxState) {
-                // update task Todo 3: Use update task method
                 taskData.updateTask(task);
+              },
+              longPressCallback: () {
+                // update task Todo 4: Use delete task to remove the task
+                taskData.deleteTask(task);
               },
             );
           },

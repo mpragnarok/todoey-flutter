@@ -23,9 +23,14 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
-// update task Todo 1: Create update task method to toggle the task
   void updateTask(Task task) {
     task.toggleDone();
+    notifyListeners();
+  }
+
+// update task Todo 3: Create delete task method to remove the task
+  void deleteTask(Task task) {
+    tasks.remove(task);
     notifyListeners();
   }
 }
