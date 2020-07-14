@@ -11,13 +11,11 @@ class TaskList extends StatefulWidget {
 class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
-    // implement Provider TODO 6: Use Consumer for shorthand of Provider.of(context)
     return Consumer<TaskData>(
       builder: (context, taskData, child) {
         return ListView.builder(
           itemBuilder: (context, index) {
             return TaskTile(
-              // implement Provider TODO 7: Call taskData instead of Provider.of(context)
               taskTitle: taskData.tasks[index].name,
               isChecked: taskData.tasks[index].isDone,
               checkboxCallback: (checkboxState) {

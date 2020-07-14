@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+// Add task with Provider TODO 2: Import Provider and TaskData
+import 'package:provider/provider.dart';
+import 'package:todoeyflutter/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function addTaskCallback;
-  AddTaskScreen(this.addTaskCallback);
+//  final Function addTaskCallback;
+//  AddTaskScreen(this.addTaskCallback);
   @override
   Widget build(BuildContext context) {
     String newTaskTitle;
@@ -70,7 +73,10 @@ class AddTaskScreen extends StatelessWidget {
                     )),
                 onPressed: () {
                   // Add Task
-                  addTaskCallback(newTaskTitle);
+                  // Add task with Provider TODO 3: Call addNewTask method and move pop screen here
+                  Provider.of<TaskData>(context, listen: false)
+                      .addNewTask(newTaskTitle);
+                  Navigator.pop(context);
                 },
               ),
             ),

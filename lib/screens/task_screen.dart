@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:todoeyflutter/widgets/task_list.dart';
 import 'package:todoeyflutter/screens/add_task_screen.dart';
-// implement Provider TODO 4: Import provider and task_data
 import 'package:provider/provider.dart';
 import 'package:todoeyflutter/models/task_data.dart';
 
@@ -21,12 +20,7 @@ class TaskScreen extends StatelessWidget {
             builder: (BuildContext context) => SingleChildScrollView(
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: AddTaskScreen((newTaskTitle) {
-//                setState(() {
-//                  tasks.add(Task(name: newTaskTitle));
-//                });
-                Navigator.pop(context);
-              }),
+              child: AddTaskScreen(),
             ),
           );
         },
@@ -64,7 +58,6 @@ class TaskScreen extends StatelessWidget {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  // implement Provider TODO 8: Use taskCount method from TaskData
                   '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(
                     color: Colors.white,

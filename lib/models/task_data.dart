@@ -1,17 +1,27 @@
-// implement Provider TODO 1: create TaskData ChangeNotifier
 import 'package:flutter/foundation.dart';
 import 'package:todoeyflutter/models/task.dart';
+import 'dart:collection';
 
 class TaskData extends ChangeNotifier {
-  // implement Provider TODO 2: Add tasks property
-  List<Task> tasks = [
+  List<Task> _tasks = [
     Task(name: 'Buy milk'),
     Task(name: 'Buy eggs'),
     Task(name: 'Buy bread'),
   ];
 
-//      // implement Provider TODO 8: Create method to get taskCount
   int get taskCount {
-    return tasks.length;
+    return _tasks.length;
+  }
+
+// Add task with Provider TODO 4: Use UnmodifiableListView List to make sure you can't modify tasks from outside
+  UnmodifiableListView<Task> get tasks {
+    return UnmodifiableListView(_tasks);
+  }
+
+// Add task with Provider TODO 1: Create addNewTask method
+  void addNewTask(String newTask) {
+    final task = Task(name: newTask);
+    _tasks.add(task);
+    notifyListeners();
   }
 }
